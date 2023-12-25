@@ -16,12 +16,14 @@ import {
   StopWatch,
   Babel,
 } from "@/components/Icons";
-import { myStyle } from "./page.css";
+import * as style from "./page.css";
 
 export default function Home() {
   return (
-    <main className={myStyle}>
-      timer pro
+    <main className={style.myStyle}>
+      <div className={style.textStyle}>timer pro</div>
+      <div className={style.textStyle}>03 : 20</div>
+
       <Close width="24" height="24" color="#999999" />
       <Cycle width="28" height="28" color="#999999" />
       <LockClosed width="28" height="28" color="#999999" />
