@@ -38,6 +38,7 @@
     "init": "^0.1.2",
     "next-compose-plugins": "^2.2.1",
     "storybook": "^7.6.6",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5"
   }
 }
