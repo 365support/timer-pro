@@ -12,3 +12,8 @@ export const textStyle = style({
   display: "flex",
   paddingTop: "3px",
 });
+
+export const displayFlex = style({
+  display: "flex",
+  alignItems: "center",
+});
