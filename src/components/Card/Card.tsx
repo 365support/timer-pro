@@ -1,9 +1,11 @@
 import React, { HTMLAttributes } from "react";
 import { theme } from "@/styles/theme.css";
-import CustomText from "../Text/CustomText";
+import CustomText, { CustomTextProps } from "../Text/CustomText";
 import * as cardStyles from "./Card.css";
+import { Combine } from "@/types/utils";
 
-interface CardProps extends HTMLAttributes<HTMLDivElement> {}
+interface CardProps
+  extends Combine<HTMLAttributes<HTMLDivElement>, CustomTextProps> {}
 
 const Card = ({ style, children, ...props }: CardProps) => {
   return (
@@ -21,13 +23,20 @@ const Icon = ({ style, children, ...props }: CardProps) => {
   );
 };
 
-const Text = ({ style, children, ...props }: CardProps) => {
+const Text = ({
+  style,
+  as = "body",
+  size = "md",
+  weight = "bold",
+  children,
+  ...props
+}: CardProps) => {
   return (
     <div style={style}>
       <CustomText
-        as="body"
-        size="md"
-        weight="bold"
+        as={as}
+        size={size}
+        weight={weight}
         color={theme.color.White100}
         family={theme.font.korean}
         {...props}
@@ -37,13 +46,21 @@ const Text = ({ style, children, ...props }: CardProps) => {
     </div>
   );
 };
-const Number = ({ style, children, ...props }: CardProps) => {
+
+const Number = ({
+  style,
+  as = "title",
+  size = "md",
+  weight = "normal",
+  children,
+  ...props
+}: CardProps) => {
   return (
     <div style={style}>
       <CustomText
-        as="title"
-        size="md"
-        weight="normal"
+        as={as}
+        size={size}
+        weight={weight}
         color={theme.color.White100}
         family={theme.font.number}
         {...props}

@@ -5,8 +5,8 @@ import { Combine } from "@/types/utils";
 import { TypoScale, TypoType, theme } from "@/styles/theme.css";
 
 type CustomTextBaseProps = {
-  as: TypoType;
-  size: TypoScale;
+  as?: TypoType;
+  size?: TypoScale;
   children: React.ReactNode;
 };
 
@@ -14,8 +14,8 @@ export type CustomTextProps = Combine<CustomTextBaseProps, TextBaseProps>;
 
 function CustomText(
   {
-    as,
-    size,
+    as = "body",
+    size = "md",
     display,
     color,
     lineHeight,
