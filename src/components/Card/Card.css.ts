@@ -1,24 +1,7 @@
-import { theme } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const myStyle = style({
-  display: "flex",
-  gap: "12px",
-  padding: "20px",
-  flexDirection: "column",
-});
-
-export const textStyle = style({
-  fontFamily: theme.font.number,
-  fontWeight: "bold",
-  display: "flex",
-  paddingTop: "3px",
-});
-
-export const displayFlex = style({
-  display: "flex",
-  gap: "12px",
-  alignItems: "center",
+export const CardStyle = style({
+  borderRadius: "16px",
 });
 
 export const cardStyle = style({

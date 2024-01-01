@@ -16,12 +16,54 @@ import {
   StopWatch,
   Babel,
 } from "@/components/Icons";
-import { myStyle } from "./page.css";
+import * as style from "./page.css";
+import * as cardStyles from "@/components/Card/Card.css";
+import Text from "@/components/Text/Text";
+import CustomText from "@/components/Text/CustomText";
+import Card from "@/components/Card/Card";
 
 export default function Home() {
   return (
-    <main className={myStyle}>
-      timer pro
+    <main className={style.myStyle}>
+      <div className={style.textStyle}>timer pro</div>
+      <div className={style.textStyle}>03 : 20</div>
+
+      <Card className={cardStyles.cardStyle}>
+        <div className={style.displayFlex}>
+          <Card.Icon>
+            <Babel width="24" height="24" color="#999999" />
+          </Card.Icon>
+          <Card.SubTitle>운동</Card.SubTitle>
+        </div>
+        <Card.Title>0:20</Card.Title>
+      </Card>
+
+      <Card className={cardStyles.secondCardStyle}>
+        <div className={style.displayFlex}>
+          <Card.Icon>
+            <Babel width="24" height="24" color="#999999" />
+          </Card.Icon>
+          <Card.SubTitle>운동</Card.SubTitle>
+        </div>
+        <Card.Title>0:20</Card.Title>
+      </Card>
+
+      <Card className={cardStyles.thirdCardStyle}>
+        <Card.Title size="lg">03 : 20</Card.Title>
+        <Card.Icon>
+          <Play width="28" height="28" color="#fff" />
+        </Card.Icon>
+        <div className={style.displayFlex}></div>
+      </Card>
+
+      <Text as="h1" weight="20" size="80" color="red">
+        hi
+      </Text>
+
+      <CustomText as="title" size="lg" weight="20" color="red">
+        CustomText
+      </CustomText>
+
       <Close width="24" height="24" color="#999999" />
       <Cycle width="28" height="28" color="#999999" />
       <LockClosed width="28" height="28" color="#999999" />
