@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Text from "./Text";
+import { Pretendard } from "@/styles/text.css";
 
 const meta = {
   title: "Text/Text",
@@ -17,13 +18,12 @@ export const Title: Story = {
   args: {
     as: "span",
     children: "텍스트 컴포넌트 입니다.",
-    display: "flex",
     color: "blue",
     lineHeight: "1.5",
     weight: "bold",
-    size: "36px",
-    align: "center",
-    family: "sans-serif",
+    size: "16px",
+    align: "start",
+    family: Pretendard,
   },
 };
 

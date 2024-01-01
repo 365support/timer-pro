@@ -1,10 +1,9 @@
-import { ElementType, Ref, forwardRef } from "react";
+import { CSSProperties, ElementType, Ref, forwardRef } from "react";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { OverridableProps } from "@/types/OverridableProps";
-import { CSSProperties } from "@vanilla-extract/css";
+import * as styles from "./Text.css";
 
 export type TextBaseProps = {
-  display?: CSSProperties["display"];
   lineHeight?: CSSProperties["lineHeight"];
   weight?: CSSProperties["fontWeight"];
   size?: CSSProperties["fontSize"];
@@ -21,13 +20,12 @@ export type TextProps<T extends ElementType> = OverridableProps<
 function Text<T extends ElementType = "span">(
   {
     as,
-    display,
-    color,
-    lineHeight,
-    weight,
-    size,
-    align,
-    family,
+    color = "black",
+    lineHeight = "1.5",
+    weight = "normal",
+    size = "16px",
+    align = "left",
+    family = "sans-serif",
     children,
     ...props
   }: TextProps<T>,
@@ -36,17 +34,22 @@ function Text<T extends ElementType = "span">(
   const Component = as ?? "span";
 
   const dynamicStyles = assignInlineVars({
-    display,
-    color,
-    lineHeight,
-    fontWeight: weight,
-    fontSize: size,
-    textAlign: align,
-    fontFamily: family,
-  } as Record<string, string>);
+    [styles.color]: color,
+    [styles.lineHeight]: `${lineHeight}`,
+    [styles.weight]: `${weight}`,
+    [styles.size]: `${size}`,
+    [styles.align]: align,
+    [styles.family]: family,
+  });
 
   return (
-    <Component ref={ref} role="text" style={dynamicStyles} {...props}>
+    <Component
+      className={styles.container}
+      ref={ref}
+      role="text"
+      style={dynamicStyles}
+      {...props}
+    >
       {children}
     </Component>
   );
