@@ -17,6 +17,7 @@ import {
   Babel,
 } from "@/components/Icons";
 import * as style from "./page.css";
+import * as cardStyles from "@/components/Card/Card.css";
 import Text from "@/components/Text/Text";
 import CustomText from "@/components/Text/CustomText";
 import Card from "@/components/Card/Card";
@@ -26,48 +27,40 @@ export default function Home() {
     <main className={style.myStyle}>
       <div className={style.textStyle}>timer pro</div>
       <div className={style.textStyle}>03 : 20</div>
-      <Card
-        style={{
-          width: "250px",
-          backgroundColor: "#574480",
-          margin: "0",
-          padding: "20px",
-        }}
-      >
+
+      <Card className={cardStyles.cardStyle}>
         <div className={style.displayFlex}>
           <Card.Icon>
-            <Babel width="28" height="28" color="#999999" />
+            <Babel width="24" height="24" color="#999999" />
           </Card.Icon>
-          <Card.Text>카드 텍스트</Card.Text>
+          <Card.SubTitle>운동</Card.SubTitle>
         </div>
-        <Card.Number>100</Card.Number>
+        <Card.Title>0:20</Card.Title>
       </Card>
 
-      <Card
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "250px",
-          backgroundColor: "#574480",
-          margin: "0",
-          padding: "20px",
-        }}
-      >
+      <Card className={cardStyles.secondCardStyle}>
         <div className={style.displayFlex}>
           <Card.Icon>
-            <Babel width="28" height="28" color="#999999" />
+            <Babel width="24" height="24" color="#999999" />
           </Card.Icon>
-          <Card.Text>카드 텍스트</Card.Text>
+          <Card.SubTitle>운동</Card.SubTitle>
         </div>
-        <Card.Number>100</Card.Number>
+        <Card.Title>0:20</Card.Title>
       </Card>
 
-      <Text as="h1" display="flex" weight="20" size={80}>
+      <Card className={cardStyles.thirdCardStyle}>
+        <Card.Title size="lg">03 : 20</Card.Title>
+        <Card.Icon>
+          <Play width="28" height="28" color="#fff" />
+        </Card.Icon>
+        <div className={style.displayFlex}></div>
+      </Card>
+
+      <Text as="h1" weight="20" size="80" color="red">
         hi
       </Text>
 
-      <CustomText as="title" size="lg" weight="20" color={"red"}>
+      <CustomText as="title" size="lg" weight="20" color="red">
         CustomText
       </CustomText>
 
