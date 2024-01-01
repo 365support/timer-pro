@@ -1,62 +1,30 @@
 import React, { HTMLAttributes } from "react";
+import clsx from "clsx";
 import { theme } from "@/styles/theme.css";
+import { Combine } from "@/types/utils";
 import CustomText, { CustomTextProps } from "../Text/CustomText";
 import * as cardStyles from "./Card.css";
-import { Combine } from "@/types/utils";
 
-interface CardProps
-  extends Combine<HTMLAttributes<HTMLDivElement>, CustomTextProps> {}
+type CardProps = Combine<HTMLAttributes<HTMLDivElement>, CustomTextProps>;
 
-const Card = ({ style, children, ...props }: CardProps) => {
+const Card = ({ className, children, ...props }: CardProps) => {
   return (
-    <div style={style} className={cardStyles.CardStyle} {...props}>
+    <div className={clsx(cardStyles.CardStyle, className)} {...props}>
       {children}
     </div>
   );
 };
 
-const Icon = ({ style, children, ...props }: CardProps) => {
-  return (
-    <div style={style} {...props}>
-      {children}
-    </div>
-  );
-};
-
-const Text = ({
-  style,
-  as = "body",
-  size = "md",
-  weight = "bold",
-  children,
-  ...props
-}: CardProps) => {
-  return (
-    <div style={style}>
-      <CustomText
-        as={as}
-        size={size}
-        weight={weight}
-        color={theme.color.White100}
-        family={theme.font.korean}
-        {...props}
-      >
-        {children}
-      </CustomText>
-    </div>
-  );
-};
-
-const Number = ({
-  style,
+const Title = ({
   as = "title",
   size = "md",
   weight = "normal",
   children,
+  className,
   ...props
 }: CardProps) => {
   return (
-    <div style={style}>
+    <div className={className}>
       <CustomText
         as={as}
         size={size}
@@ -71,8 +39,40 @@ const Number = ({
   );
 };
 
+const SubTitle = ({
+  as = "body",
+  size = "md",
+  weight = "bold",
+  children,
+  className,
+  ...props
+}: CardProps) => {
+  return (
+    <div className={className}>
+      <CustomText
+        as={as}
+        size={size}
+        weight={weight}
+        color={theme.color.White100}
+        family={theme.font.korean}
+        {...props}
+      >
+        {children}
+      </CustomText>
+    </div>
+  );
+};
+
+const Icon = ({ className, children, ...props }: CardProps) => {
+  return (
+    <div className={className} {...props}>
+      {children}
+    </div>
+  );
+};
+
+Card.Title = Title;
+Card.SubTitle = SubTitle;
 Card.Icon = Icon;
-Card.Text = Text;
-Card.Number = Number;
 
 export default Card;
