@@ -1,5 +1,4 @@
 import React, { Ref, forwardRef } from "react";
-import { assignInlineVars } from "@vanilla-extract/dynamic";
 import Text, { TextBaseProps } from "./Text";
 import { Combine } from "@/types/utils";
 import { TypoScale, TypoType, theme } from "@/styles/theme.css";
@@ -16,33 +15,31 @@ function CustomText(
   {
     as = "body",
     size = "md",
-    display,
-    color,
-    lineHeight,
-    weight,
-    align,
-    family,
+    color = "black",
+    lineHeight = "1.5",
+    weight = "normal",
+    align = "left",
+    family = "sans-serif",
     children,
     ...props
   }: CustomTextProps,
   ref: Ref<any>
 ) {
-  const fontSizeValue = theme.fontSize[as][size];
-
-  const dynamicStyles = assignInlineVars({
-    display,
-    color,
-    lineHeight,
-    fontWeight: weight,
-    fontSize: fontSizeValue,
-    textAlign: align,
-    fontFamily: family,
-  } as Record<string, string>);
-
+  const fontSize = theme.fontSize[as][size];
   const Component = as === "title" ? "span" : "p";
 
   return (
-    <Text as={Component} {...props} style={dynamicStyles} ref={ref}>
+    <Text
+      as={Component}
+      color={color}
+      lineHeight={lineHeight}
+      size={fontSize}
+      weight={weight}
+      align={align}
+      family={family}
+      ref={ref}
+      {...props}
+    >
       {children}
     </Text>
   );
