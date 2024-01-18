@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Text from "./Text";
-import { Pretendard } from "@/styles/text.css";
+import { Pretendard } from "@/styles/font.css";
 
 const meta = {
   title: "Text/Text",

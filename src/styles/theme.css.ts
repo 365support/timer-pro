@@ -1,5 +1,5 @@
 import { createGlobalTheme } from "@vanilla-extract/css";
-import { Pretendard, Rubik } from "./text.css";
+import { Pretendard, Rubik } from "./font.css";
 
 export type TypoType = "title" | "body" | "caption";
 export type TypoScale = "xxs" | "xs" | "sm" | "md" | "lg" | "xlg";

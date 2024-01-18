@@ -5,6 +5,7 @@ const withVanillaExtract = createVanillaExtractPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
+  reactStrictMode: false,
   compiler: {
     removeConsole: process.env.NODE_ENV !== "development",
   },

@@ -9,8 +9,14 @@ globalStyle("*", {
 const pretendard = "Pretendard";
 
 globalFontFace(pretendard, {
-  src: `url("/fonts/Pretendard-Regular.otf")`,
-  fontWeight: "normal",
+  src: [
+    `url("/fonts/Pretendard-Regular.woff") format("woff")`,
+    `url("/fonts/Pretendard-Regular.woff2") format("woff2")`,
+    `local("Pretendard-Regular")`,
+  ],
+  fontStyle: "normal",
+  fontWeight: "400",
+  fontDisplay: "swap",
 });
 
 globalStyle("html, body", {
