@@ -1,6 +1,6 @@
-import { Schedule, Template } from "@/types/Time";
+import { Schedule, TabataTemplate } from "@/types/Time";
 
-const createRoundSchedules = (template: Template): Schedule[] => {
+const createRoundSchedules = (template: TabataTemplate): Schedule[] => {
   return Array.from({ length: template.round }, (_, index) => {
     const isNotLastRound = index < template.round - 1;
 
@@ -11,7 +11,9 @@ const createRoundSchedules = (template: Template): Schedule[] => {
   }).flat();
 };
 
-export const createScheduleFromTemplate = (template: Template): Schedule[] => {
+export const createScheduleFromTemplate = (
+  template: TabataTemplate
+): Schedule[] => {
   const roundSchedules = createRoundSchedules(template);
 
   return Array.from({ length: template.cycle }, (_, cycleIndex) => {

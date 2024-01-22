@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { createScheduleFromTemplate } from "@/utils/createScheduleFromTemplate";
-import { Schedule, Template } from "@/types/Time";
+import { Schedule, TabataTemplate } from "@/types/Time";
 import { DEFAULT_TEMPLATE } from "@/constants/constants";
 import useLocalStorage from "./useLocalStorage";
 
 const useSchedule = (templateName: string): Schedule[] => {
-  const [template, setTemplate] = useLocalStorage<Template>(
+  const [template, setTemplate] = useLocalStorage<TabataTemplate>(
     templateName,
     DEFAULT_TEMPLATE
   );

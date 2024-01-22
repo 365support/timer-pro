@@ -15,10 +15,12 @@ type Cycle = {
   rest: Schedule;
 };
 
-export type Template = {
+export type TabataTemplate = {
   work: Time;
   rest: Time;
   round: number;
   cycle: number;
   cycleRest: Time;
 };
+
+export type TemplateType = "tabata" | "round" | "stopwatch";
