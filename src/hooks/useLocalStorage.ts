@@ -1,30 +1,30 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { getLocalStorageItem, setLocalStorageItem } from "@/utils/localStorage";
 
 function useLocalStorage<T>(
   key: string,
   defaultValue: T
-): [T, Dispatch<SetStateAction<T>>] {
-  const [value, setValue] = useState<T>(() => {
-    if (typeof window === "undefined") {
-      return defaultValue;
-    }
+): [T, Dispatch<SetStateAction<T>>];
 
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : defaultValue;
-    } catch (error) {
-      console.error("Error reading localStorage:", error);
-      return defaultValue;
+function useLocalStorage<T>(
+  key: string
+): [T | null, Dispatch<SetStateAction<T | null>>];
+
+function useLocalStorage<T>(
+  key: string,
+  defaultValue?: T
+): [T | null, Dispatch<SetStateAction<T | null>>] {
+  const [value, setValue] = useState<T | null>(() => {
+    if (typeof window === "undefined") {
+      return defaultValue ?? null;
     }
+    const storedValue = getLocalStorageItem(key);
+    return storedValue ? storedValue : defaultValue ?? null;
   });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      try {
-        window.localStorage.setItem(key, JSON.stringify(value));
-      } catch (error) {
-        console.error("Error setting localStorage:", error);
-      }
+      setLocalStorageItem(key, value);
     }
   }, [key, value]);
 
