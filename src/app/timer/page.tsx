@@ -1,15 +1,15 @@
 "use client";
-import Timer from "@/components/Timer/Timer";
+import ScheduleTimer from "@/components/ScheduleTimer";
 import useSchedule from "@/hooks/useSchedule";
 
 const TimerPage = () => {
-  const currentSchedule = useSchedule("template");
+  const currentSchedule = useSchedule("tabata");
 
   if (currentSchedule.length === 0) {
     return null;
   }
 
-  return <Timer schedule={currentSchedule} />;
+  return <ScheduleTimer TemplateType="tabata" schedules={currentSchedule} />;
 };
 
 export default TimerPage;

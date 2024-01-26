@@ -1,17 +1,16 @@
 "use client";
-import { ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
-
+import { TabataTemplate, Time } from "@/types/Time";
 import { DEFAULT_TEMPLATE } from "@/constants/constants";
+import { parseToInteger } from "@/utils/parseToInteger";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { Template as TemplateType, Time } from "@/types/Time";
 import * as style from "./Template.css";
 
-const Template = () => {
+const TabataTemplateEditor = () => {
   const router = useRouter();
 
-  const [template, setTemplate] = useLocalStorage<TemplateType>(
-    "template",
+  const [template, setTemplate] = useLocalStorage<TabataTemplate>(
+    "tabata",
     DEFAULT_TEMPLATE
   );
 
@@ -25,17 +24,16 @@ const Template = () => {
   };
 
   const handleTemplateUpdate = (
-    field: keyof TemplateType,
-    event: ChangeEvent<HTMLInputElement>,
+    field: keyof TabataTemplate,
+    value: number,
     subField?: keyof Time
   ) => {
-    const value = parseInt(event.target.value, 10) || 0;
-
-    setTemplate((prevState: TemplateType) => {
-      if (isTimeObject(prevState[field]) && subField) {
+    setTemplate((prevState: TabataTemplate) => {
+      const currentField = prevState[field];
+      if (isTimeObject(currentField) && subField) {
         return {
           ...prevState,
-          [field]: { ...(prevState[field] as Time), [subField]: value },
+          [field]: { ...currentField, [subField]: value },
         };
       }
 
@@ -46,38 +44,54 @@ const Template = () => {
     });
   };
 
-  const handleStartButtonClick = () => {
+  const navigateToTimerPage = () => {
     router.push("/timer");
   };
 
   return (
     <div className={style.container}>
-      {/* 운동 시간 입력 필드 */}
       <div className={style.innerContainer}>
         <label htmlFor="work-minutes">운동</label>
         <input
           type="number"
           id="work-minutes"
-          onChange={(event) => handleTemplateUpdate("work", event, "minutes")}
+          onChange={(event) =>
+            handleTemplateUpdate(
+              "work",
+              parseToInteger(event.target.value),
+              "minutes"
+            )
+          }
           defaultValue={template.work.minutes}
         />
         <div> 분</div>
         <input
           type="number"
           id="work-seconds"
-          onChange={(event) => handleTemplateUpdate("work", event, "seconds")}
+          onChange={(event) =>
+            handleTemplateUpdate(
+              "work",
+              parseToInteger(event.target.value),
+              "seconds"
+            )
+          }
           defaultValue={template.work.seconds}
         />
         <div> 초</div>
       </div>
 
-      {/* 휴식 시간 입력 필드 */}
       <div className={style.innerContainer}>
         <label htmlFor="rest-minutes">휴식</label>
         <input
           type="number"
           id="rest-minutes"
-          onChange={(event) => handleTemplateUpdate("rest", event, "minutes")}
+          onChange={(event) =>
+            handleTemplateUpdate(
+              "rest",
+              parseToInteger(event.target.value),
+              "minutes"
+            )
+          }
           defaultValue={template.rest.minutes}
         />
         <div> 분</div>
@@ -85,19 +99,26 @@ const Template = () => {
         <input
           type="number"
           id="rest-seconds"
-          onChange={(event) => handleTemplateUpdate("rest", event, "seconds")}
+          onChange={(event) =>
+            handleTemplateUpdate(
+              "rest",
+              parseToInteger(event.target.value),
+              "seconds"
+            )
+          }
           defaultValue={template.rest.seconds}
         />
         <div> 초</div>
       </div>
 
-      {/* 라운드 및 사이클 입력 필드 */}
       <div className={style.innerContainer}>
         <label htmlFor="round-count">라운드</label>
         <input
           type="number"
           id="round-count"
-          onChange={(event) => handleTemplateUpdate("round", event)}
+          onChange={(event) =>
+            handleTemplateUpdate("round", parseToInteger(event.target.value))
+          }
           defaultValue={template.round}
         />
       </div>
@@ -106,19 +127,24 @@ const Template = () => {
         <input
           type="number"
           id="cycle-count"
-          onChange={(event) => handleTemplateUpdate("cycle", event)}
+          onChange={(event) =>
+            handleTemplateUpdate("cycle", parseToInteger(event.target.value))
+          }
           defaultValue={template.cycle}
         />
       </div>
 
-      {/* 사이클 휴식 시간 입력 필드 */}
       <div className={style.innerContainer}>
         <div>사이클 휴식</div>
         <input
           type="number"
           id="cycle-rest-minutes"
           onChange={(event) =>
-            handleTemplateUpdate("cycleRest", event, "minutes")
+            handleTemplateUpdate(
+              "cycleRest",
+              parseToInteger(event.target.value),
+              "minutes"
+            )
           }
           defaultValue={template.cycleRest.minutes}
         />
@@ -127,16 +153,20 @@ const Template = () => {
           type="number"
           id="cycle-rest-seconds"
           onChange={(event) =>
-            handleTemplateUpdate("cycleRest", event, "seconds")
+            handleTemplateUpdate(
+              "cycleRest",
+              parseToInteger(event.target.value),
+              "seconds"
+            )
           }
           defaultValue={template.cycleRest.seconds}
         />
         <label htmlFor="cycle-rest-seconds"> 초</label>
       </div>
 
-      <button onClick={handleStartButtonClick}>시작</button>
+      <button onClick={navigateToTimerPage}>시작</button>
     </div>
   );
 };
 
-export default Template;
+export default TabataTemplateEditor;

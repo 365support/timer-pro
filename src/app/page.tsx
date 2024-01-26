@@ -1,4 +1,4 @@
-import Template from "@/components/Template/Template";
+import Template from "@/components/Template/TabataTemplate";
 
 export default function Home() {
   return (
