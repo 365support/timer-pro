@@ -13,8 +13,8 @@ const ScheduleCounter = ({
 }: Props) => {
   const { cycle, totalWork } = useScheduleTemplate(TemplateType);
 
-  const [currentWork, setCurrentWork] = useState<number>(0);
-  const [currentCycle, setCurrentCycle] = useState<number>(1);
+  const [currentWork, setCurrentWork] = useState(0);
+  const [currentCycle, setCurrentCycle] = useState(1);
 
   useEffect(() => {
     const updateScheduleCounter = () => {
