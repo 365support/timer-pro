@@ -1,19 +1,18 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Schedule } from "@/types/Time";
 import useTimer from "./useTimer";
 
-const useScheduleTimer = (schedules: Schedule[]) => {
+type ScheduleTimer = {
+  schedules: Schedule[];
+  onCancel: () => void;
+};
+
+const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
   const [currentSchedulesIndex, setCurrentSchedulesIndex] = useState(0);
 
   const { currentTime, isRunning, startTimer, stopTimer, resetTimer } =
     useTimer();
-
-  const router = useRouter();
-  const navigateToMainPage = () => {
-    router.push("/");
-  };
 
   const startScheduleTimerForIndex = (index: number) => {
     const { minutes, seconds } = schedules[index].time;
@@ -40,7 +39,7 @@ const useScheduleTimer = (schedules: Schedule[]) => {
 
   const cancelScheduleTimer = () => {
     resetTimer();
-    navigateToMainPage();
+    onCancel();
   };
 
   const currentSchedule = schedules[currentSchedulesIndex];

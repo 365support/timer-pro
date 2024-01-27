@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import useScheduleTimer from "@/hooks/useScheduleTimer";
 import { Schedule, TemplateType } from "@/types/Time";
 import CurrentSchedule from "./Component/CurrentSchedule";
@@ -12,6 +13,11 @@ interface Props {
 }
 
 const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
+  const router = useRouter();
+  const navigateToMainPage = () => {
+    router.push("/");
+  };
+
   const {
     currentSchedule,
     nextSchedule,
@@ -21,7 +27,7 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
     nextScheduleTimer,
     cancelScheduleTimer,
     stopScheduleTimer,
-  } = useScheduleTimer(schedules);
+  } = useScheduleTimer({ schedules, onCancel: navigateToMainPage });
 
   return (
     <div>
