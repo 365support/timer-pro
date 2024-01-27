@@ -30,9 +30,7 @@ const useTimer = () => {
       setTotalSeconds((prevSeconds) => {
         if (prevSeconds <= 1) {
           clearInterval(timerRef.current);
-          if (onComplete) {
-            onComplete();
-          }
+          onComplete && onComplete();
           setIsRunning(false);
           return 0;
         }
