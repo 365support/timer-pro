@@ -1,4 +1,5 @@
 import { Time } from "@/types/Time";
+import { formatToDoubleDigit } from "@/utils/formatToDoubleDigit";
 
 type Props = {
   name: string;
@@ -8,9 +9,9 @@ type Props = {
 const CurrentSchedule = ({ name, time }: Props) => {
   return (
     <>
-      <div>현재: {name}</div>
+      <div>{name}</div>
       <div>
-        남은 시간: {time.minutes}분 {time.seconds}초
+        {formatToDoubleDigit(time.minutes)}: {formatToDoubleDigit(time.seconds)}
       </div>
     </>
   );
