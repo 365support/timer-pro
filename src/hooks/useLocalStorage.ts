@@ -13,13 +13,15 @@ function useLocalStorage<T>(
 function useLocalStorage<T>(
   key: string,
   defaultValue?: T
-): [T | null, Dispatch<SetStateAction<T | null>>] {
-  const [value, setValue] = useState<T | null>(() => {
+): [T | null, Dispatch<SetStateAction<NonNullable<T> | null>>] {
+  const [value, setValue] = useState(() => {
     if (typeof window === "undefined") {
       return defaultValue ?? null;
     }
-    const storedValue = getLocalStorageItem(key);
-    return storedValue ? storedValue : defaultValue ?? null;
+    const storedValue = getLocalStorageItem<T>(key);
+
+    if (!storedValue) return defaultValue ?? null;
+    return storedValue;
   });
 
   useEffect(() => {
