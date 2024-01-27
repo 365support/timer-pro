@@ -15,12 +15,7 @@ const TabataTemplateEditor = () => {
   );
 
   const isTimeObject = (value: Time | number): value is Time => {
-    if (!value || typeof value !== "object") {
-      return false;
-    }
-
-    const requiredKeys: Array<keyof Time> = ["minutes", "seconds"];
-    return requiredKeys.every((key) => key in value);
+    return value !== null && typeof value !== "number";
   };
 
   const handleTemplateUpdate = (
