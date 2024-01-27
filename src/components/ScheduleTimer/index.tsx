@@ -3,9 +3,8 @@ import useScheduleTimer from "@/hooks/useScheduleTimer";
 import { Schedule, TemplateType } from "@/types/Time";
 import CurrentSchedule from "./Component/CurrentSchedule";
 import NextSchedule from "./Component/NextSchedule";
-import ScheduleController from "./Component/ScheduleController";
 import ScheduleCounter from "./Component/ScheduleCounter";
-import { useEffect } from "react";
+import ControlPanel from "./Component/ControlPanel";
 
 interface Props {
   schedules: Schedule[];
@@ -38,17 +37,15 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
         />
       )}
 
-      {nextSchedule && (
-        <NextSchedule name={nextSchedule.name} time={nextSchedule.time} />
-      )}
+      {nextSchedule && <NextSchedule name={nextSchedule.name} />}
 
-      <ScheduleController
+      <ControlPanel
         isRunning={isRunning}
-        startSchedule={startScheduleTimer}
-        cancelSchedule={cancelScheduleTimer}
-        nextSchedule={nextScheduleTimer}
-        stopSchedule={stopScheduleTimer}
-        hasNextSchedule={!!nextSchedule}
+        onStart={startScheduleTimer}
+        onStop={stopScheduleTimer}
+        onCancel={cancelScheduleTimer}
+        onNext={nextScheduleTimer}
+        hasNext={!!nextSchedule}
       />
     </div>
   );
