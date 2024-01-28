@@ -10,6 +10,7 @@ type ScheduleTimer = {
 
 const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
   const [currentSchedulesIndex, setCurrentSchedulesIndex] = useState(0);
+  const [scheduleTimerIsRunning, setScheduleTimerIsRunning] = useState(false);
 
   const { currentTime, isRunning, startTimer, stopTimer, resetTimer } =
     useTimer();
@@ -23,22 +24,32 @@ const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
     const canStartTimer = schedules.length > 0 && !isRunning;
 
     if (canStartTimer) {
+      setScheduleTimerIsRunning(true);
       startScheduleTimerForIndex(currentSchedulesIndex);
     }
   };
 
   const nextScheduleTimer = () => {
+    if (isRunning) return;
     setCurrentSchedulesIndex((prevIndex) => {
       const updatedIndex = prevIndex + 1;
       if (updatedIndex < schedules.length) {
         startScheduleTimerForIndex(updatedIndex);
+      } else {
+        setScheduleTimerIsRunning(false);
       }
       return updatedIndex;
     });
   };
 
+  const stopScheduleTimer = () => {
+    stopTimer();
+    setScheduleTimerIsRunning(false);
+  };
+
   const cancelScheduleTimer = () => {
     resetTimer();
+    setScheduleTimerIsRunning(false);
     onCancel();
   };
 
@@ -49,6 +60,7 @@ const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
       : null;
 
   return {
+    currentSchedulesIndex,
     currentSchedule,
     nextSchedule,
     currentTime,
@@ -56,7 +68,8 @@ const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
     startScheduleTimer,
     nextScheduleTimer,
     cancelScheduleTimer,
-    stopScheduleTimer: stopTimer,
+    stopScheduleTimer,
+    scheduleTimerIsRunning,
   };
 };
 

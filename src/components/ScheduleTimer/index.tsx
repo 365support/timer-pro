@@ -6,6 +6,7 @@ import CurrentSchedule from "./Component/CurrentSchedule";
 import NextSchedule from "./Component/NextSchedule";
 import ScheduleCounter from "./Component/ScheduleCounter";
 import ControlPanel from "./Component/ControlPanel";
+import RestTime from "./Component/RestTime";
 
 interface Props {
   schedules: Schedule[];
@@ -27,7 +28,11 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
     nextScheduleTimer,
     cancelScheduleTimer,
     stopScheduleTimer,
-  } = useScheduleTimer({ schedules, onCancel: navigateToMainPage });
+    scheduleTimerIsRunning,
+  } = useScheduleTimer({
+    schedules,
+    onCancel: navigateToMainPage,
+  });
 
   return (
     <div>
@@ -42,6 +47,8 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
           time={isRunning ? currentTime : currentSchedule.time}
         />
       )}
+
+      <RestTime scheduleTimerIsRunning={scheduleTimerIsRunning} />
 
       {nextSchedule && <NextSchedule name={nextSchedule.name} />}
 
