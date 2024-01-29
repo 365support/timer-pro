@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import useScheduleTimer from "@/hooks/useScheduleTimer";
+import { useScheduleTemplate } from "@/hooks/useScheduleTemplate";
 import { Schedule, TemplateType } from "@/types/Time";
 import CurrentSchedule from "./Component/CurrentSchedule";
 import NextSchedule from "./Component/NextSchedule";
@@ -14,6 +15,8 @@ interface Props {
 }
 
 const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
+  const { totalTime, cycle, totalWork } = useScheduleTemplate(TemplateType);
+
   const router = useRouter();
   const navigateToMainPage = () => {
     router.push("/");
@@ -28,37 +31,33 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
     nextScheduleTimer,
     cancelScheduleTimer,
     stopScheduleTimer,
-    scheduleTimerIsRunning,
+    currentTotalTime,
+    totalTimerIsRunning,
   } = useScheduleTimer({
     schedules,
+    totalTime,
     onCancel: navigateToMainPage,
   });
 
   return (
     <div>
       <ScheduleCounter
-        TemplateType={TemplateType}
         currentSchedule={currentSchedule}
+        totalWork={totalWork}
+        cycle={cycle}
       />
-
       {currentSchedule && (
-        <CurrentSchedule
-          name={currentSchedule.name}
-          time={isRunning ? currentTime : currentSchedule.time}
-        />
+        <CurrentSchedule name={currentSchedule.name} time={currentTime} />
       )}
-
-      <RestTime scheduleTimerIsRunning={scheduleTimerIsRunning} />
-
+      <RestTime time={currentTotalTime} />
       {nextSchedule && <NextSchedule name={nextSchedule.name} />}
-
       <ControlPanel
         isRunning={isRunning}
         onStart={startScheduleTimer}
         onStop={stopScheduleTimer}
         onCancel={cancelScheduleTimer}
         onNext={nextScheduleTimer}
-        hasNext={!!nextSchedule}
+        hasNext={!!nextSchedule && totalTimerIsRunning}
       />
     </div>
   );
