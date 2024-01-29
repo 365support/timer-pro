@@ -1,11 +1,14 @@
 import { useMemo } from "react";
-import { TabataTemplate } from "@/types/Time";
+import { TabataTemplate, Time } from "@/types/Time";
 import useLocalStorage from "./useLocalStorage";
 import { DEFAULT_TEMPLATE } from "@/constants/constants";
+import { getTimeFromSeconds } from "./useTimer";
 
 interface ScheduleTemplate extends TabataTemplate {
   totalWork: number;
-  totalTime: number;
+  totalTime: Time & {
+    totalSeconds: number;
+  };
 }
 
 export const useScheduleTemplate = (templateName: string): ScheduleTemplate => {
@@ -26,9 +29,14 @@ export const useScheduleTemplate = (templateName: string): ScheduleTemplate => {
     const cycleRestTimeInSeconds =
       template.cycleRest.minutes * 60 + template.cycleRest.seconds;
 
-    return (
-      totalWork * (workTimeInSeconds + restTimeInSeconds) +
-      (template.cycle - 1) * cycleRestTimeInSeconds
+    const totalCycleTime =
+      (workTimeInSeconds + restTimeInSeconds) * (template.round - 1) +
+      workTimeInSeconds;
+
+    const totalCycleRestTime = (template.cycle - 1) * cycleRestTimeInSeconds;
+
+    return getTimeFromSeconds(
+      totalCycleTime * template.cycle + totalCycleRestTime
     );
   }, [template]);
 
