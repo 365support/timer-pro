@@ -7,7 +7,7 @@ const setLocalStorageItem = <T>(key: string, value: T) => {
   }
 };
 
-const getLocalStorageItem = (key: string) => {
+const getLocalStorageItem = <T>(key: string): T | null => {
   try {
     const item = window.localStorage.getItem(key);
     return item ? JSON.parse(item) : null;

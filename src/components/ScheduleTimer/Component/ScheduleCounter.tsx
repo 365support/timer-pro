@@ -1,20 +1,15 @@
 import { useEffect, useState } from "react";
-import { useScheduleTemplate } from "@/hooks/useScheduleTemplate";
-import { Schedule, TemplateType } from "@/types/Time";
+import { Schedule } from "@/types/Time";
 
 type Props = {
   currentSchedule: Schedule;
-  TemplateType?: TemplateType;
+  totalWork: number;
+  cycle: number;
 };
 
-const ScheduleCounter = ({
-  currentSchedule,
-  TemplateType = "tabata",
-}: Props) => {
-  const { cycle, totalWork } = useScheduleTemplate(TemplateType);
-
-  const [currentWork, setCurrentWork] = useState<number>(0);
-  const [currentCycle, setCurrentCycle] = useState<number>(1);
+const ScheduleCounter = ({ currentSchedule, totalWork, cycle }: Props) => {
+  const [currentWork, setCurrentWork] = useState(0);
+  const [currentCycle, setCurrentCycle] = useState(1);
 
   useEffect(() => {
     const updateScheduleCounter = () => {
