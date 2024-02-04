@@ -1,3 +1,3 @@
 export const formatToDoubleDigit = (time: number) => {
-  return time < 10 ? `0${time}` : `${time}`;
+  return String(time).padStart(2, "0");
 };
