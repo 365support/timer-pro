@@ -15,7 +15,7 @@ interface Props {
 }
 
 const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
-  const { totalTime, cycle, totalWork } = useScheduleTemplate(TemplateType);
+  const { cycle, totalWork } = useScheduleTemplate(TemplateType);
 
   const router = useRouter();
   const navigateToMainPage = () => {
@@ -26,7 +26,6 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
     currentSchedule,
     nextSchedule,
     currentTime,
-    isRunning,
     startScheduleTimer,
     nextScheduleTimer,
     cancelScheduleTimer,
@@ -35,7 +34,6 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
     totalTimerIsRunning,
   } = useScheduleTimer({
     schedules,
-    totalTime,
     onCancel: navigateToMainPage,
   });
 
@@ -52,12 +50,12 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
       <RestTime time={currentTotalTime} />
       {nextSchedule && <NextSchedule name={nextSchedule.name} />}
       <ControlPanel
-        isRunning={isRunning}
+        isRunning={totalTimerIsRunning}
         onStart={startScheduleTimer}
         onStop={stopScheduleTimer}
         onCancel={cancelScheduleTimer}
         onNext={nextScheduleTimer}
-        hasNext={!!nextSchedule && totalTimerIsRunning}
+        hasNext={!!nextSchedule}
       />
     </div>
   );

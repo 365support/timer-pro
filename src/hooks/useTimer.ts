@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from "react";
+import { Time } from "@/types/Time";
 
-export const getTimeFromSeconds = (secs: number) => {
+export const getTimeFromSeconds = (
+  secs: number
+): Time & { totalSeconds: number } => {
   const totalSeconds = Math.ceil(secs);
   const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
   const seconds = Math.floor(totalSeconds % 60);
@@ -31,7 +34,7 @@ const useTimer = () => {
         if (prevSeconds <= 1) {
           clearInterval(timerRef.current);
           setIsRunning(false);
-          onComplete && onComplete();
+          onComplete?.();
           return 0;
         }
         return prevSeconds - 1;

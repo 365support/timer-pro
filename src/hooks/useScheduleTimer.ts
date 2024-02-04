@@ -1,23 +1,17 @@
 "use client";
-import { useState } from "react";
-import { Schedule, Time } from "@/types/Time";
-import useTimer from "./useTimer";
-import { isTimeNonZero } from "@/utils/isTimeNonZero";
+import { useEffect, useState } from "react";
+import { Schedule } from "@/types/Time";
+import { timeIsUp } from "@/utils/timeIsUp";
 import { selectAppropriateTime } from "@/utils/selectAppropriateTime";
-import { checkTimerStatus } from "@/utils/checkTimerStatus";
-import { adjustTimeToPositive } from "@/utils/adjustTimeToPositive";
+import { calcTotalTime } from "./useScheduleTemplate";
+import useTimer from "./useTimer";
 
 type ScheduleTimer = {
   schedules: Schedule[];
-  totalTime: Time;
   onCancel: () => void;
 };
 
-const useScheduleTimer = ({
-  schedules,
-  totalTime,
-  onCancel,
-}: ScheduleTimer) => {
+const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
   const { currentTime, isRunning, startTimer, stopTimer, resetTimer } =
     useTimer();
 
@@ -37,10 +31,24 @@ const useScheduleTimer = ({
     seconds: 0,
   });
 
+  const totalTime = calcTotalTime(
+    schedules.slice(currentSchedulesIndex, schedules.length)
+  );
+
+  const startScheduleTimer = () => {
+    const canStartTimer = schedules.length > 0 && !isRunning;
+
+    if (canStartTimer) {
+      setTotalTimerIsRunning(true);
+      startScheduleTimerForIndex(currentSchedulesIndex);
+      startTotalTimerForSchedule();
+    }
+  };
+
   const startScheduleTimerForIndex = (index: number) => {
-    const isPausedTimeZero = isTimeNonZero(pausedTime);
+    const hasPausedTime = !timeIsUp(pausedTime);
     const scheduleTime = selectAppropriateTime(
-      isPausedTimeZero,
+      hasPausedTime,
       pausedTime,
       schedules[index].time
     );
@@ -48,58 +56,34 @@ const useScheduleTimer = ({
     startTimer(scheduleTime.minutes, scheduleTime.seconds, nextScheduleTimer);
   };
 
-  const startScheduleTimer = () => {
-    const canStartTimer = schedules.length > 0 && !isRunning;
+  const startTotalTimerForSchedule = () => {
+    const hasPausedTime = !timeIsUp(totalPausedTime);
 
-    const isPausedTimeZero = isTimeNonZero(totalPausedTime);
     const totalTimerTime = selectAppropriateTime(
-      isPausedTimeZero,
+      hasPausedTime,
       totalPausedTime,
       totalTime
     );
 
-    if (canStartTimer) {
-      setTotalTimerIsRunning(true);
-      startScheduleTimerForIndex(currentSchedulesIndex);
-      startTotalTimer(totalTimerTime.minutes, totalTimerTime.seconds);
-    }
-  };
-
-  const updateTimerForNextSchedule = (
-    prevIndex: number,
-    updatedIndex: number
-  ) => {
-    const currentScheduleTime = schedules[prevIndex].time;
-    totalTime.minutes -= currentScheduleTime.minutes;
-    totalTime.seconds -= currentScheduleTime.seconds;
-
-    adjustTimeToPositive(totalTime);
-
-    const nextScheduleTime = schedules[updatedIndex].time;
-    startTimer(
-      nextScheduleTime.minutes,
-      nextScheduleTime.seconds,
-      nextScheduleTimer
-    );
-
-    startTotalTimer(totalTime.minutes, totalTime.seconds);
+    startTotalTimer(totalTimerTime.minutes, totalTimerTime.seconds);
   };
 
   const nextScheduleTimer = () => {
-    setCurrentSchedulesIndex((prevIndex) => {
-      const updatedIndex = prevIndex + 1;
-      const hasNextSchedule = updatedIndex < schedules.length;
-      if (hasNextSchedule) {
-        startScheduleTimerForIndex(updatedIndex);
-        setPausedTime({ minutes: 0, seconds: 0 });
+    setPausedTime({ minutes: 0, seconds: 0 });
+    setTotalPausedTime({ minutes: 0, seconds: 0 });
 
-        updateTimerForNextSchedule(prevIndex, updatedIndex);
-      } else {
-        setTotalTimerIsRunning(false);
-      }
-      return updatedIndex;
-    });
+    const hasNextSchedule = currentSchedulesIndex < schedules.length - 1;
+    if (hasNextSchedule) {
+      setCurrentSchedulesIndex((prevIndex) => prevIndex + 1);
+    }
   };
+
+  useEffect(() => {
+    if (totalTimerIsRunning) {
+      startScheduleTimerForIndex(currentSchedulesIndex);
+      startTotalTimerForSchedule();
+    }
+  }, [currentSchedulesIndex, totalTimerIsRunning]);
 
   const stopScheduleTimer = () => {
     stopTimer();
@@ -121,23 +105,27 @@ const useScheduleTimer = ({
   };
 
   const displayCurrentTime = () => {
-    const status = checkTimerStatus(totalTimerIsRunning, currentSchedulesIndex);
-    if (status === "notStarted") {
-      return schedules[0].time;
-    } else if (status === "running") {
+    const hasPausedTime = !timeIsUp(pausedTime);
+
+    if (totalTimerIsRunning) {
       return currentTime;
     }
-    return pausedTime;
+    if (hasPausedTime) {
+      return pausedTime;
+    }
+    return schedules[currentSchedulesIndex].time;
   };
 
   const displayCurrentTotalTime = () => {
-    const status = checkTimerStatus(totalTimerIsRunning, currentSchedulesIndex);
-    if (status === "notStarted") {
-      return totalTime;
-    } else if (status === "running") {
+    const hasPausedTime = !timeIsUp(totalPausedTime);
+
+    if (totalTimerIsRunning) {
       return currentTotalTime;
     }
-    return totalPausedTime;
+    if (hasPausedTime) {
+      return totalPausedTime;
+    }
+    return totalTime;
   };
 
   const currentSchedule = schedules[currentSchedulesIndex];
@@ -155,7 +143,6 @@ const useScheduleTimer = ({
     cancelScheduleTimer,
     stopScheduleTimer,
     currentTotalTime: displayCurrentTotalTime(),
-
     totalTimerIsRunning,
   };
 };

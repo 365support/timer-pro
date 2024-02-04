@@ -5,15 +5,10 @@ function useLocalStorage<T>(
   key: string,
   defaultValue: T
 ): [T, Dispatch<SetStateAction<T>>];
-
 function useLocalStorage<T>(
   key: string
 ): [T | null, Dispatch<SetStateAction<T | null>>];
-
-function useLocalStorage<T>(
-  key: string,
-  defaultValue?: T
-): [T | null, Dispatch<SetStateAction<NonNullable<T> | null>>] {
+function useLocalStorage<T>(key: string, defaultValue?: T) {
   const [value, setValue] = useState(() => {
     if (typeof window === "undefined") {
       return defaultValue ?? null;

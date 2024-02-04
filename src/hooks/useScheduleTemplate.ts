@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { TabataTemplate, Time } from "@/types/Time";
+import { Schedule, TabataTemplate, Time } from "@/types/Time";
 import useLocalStorage from "./useLocalStorage";
 import { DEFAULT_TEMPLATE } from "@/constants/constants";
 import { getTimeFromSeconds } from "./useTimer";
@@ -11,34 +11,43 @@ interface ScheduleTemplate extends TabataTemplate {
   };
 }
 
+const convertMinutesToSeconds = (minutes: number) => minutes * 60;
+
+const removeLastRest = (restCount: number) => restCount - 1;
+
 export const useScheduleTemplate = (templateName: string): ScheduleTemplate => {
-  const [template, setTemplate] = useLocalStorage<TabataTemplate>(
+  const [template] = useLocalStorage<TabataTemplate>(
     templateName,
     DEFAULT_TEMPLATE
   );
 
-  const totalWork = useMemo(() => {
-    return template.round * template.cycle;
-  }, [template.round, template.cycle]);
+  const totalWork = template.round * template.cycle;
 
   const totalTime = useMemo(() => {
+    const { work, rest, cycleRest, round, cycle } = template;
+
     const workTimeInSeconds =
-      template.work.minutes * 60 + template.work.seconds;
+      convertMinutesToSeconds(work.minutes) + work.seconds;
     const restTimeInSeconds =
-      template.rest.minutes * 60 + template.rest.seconds;
+      convertMinutesToSeconds(rest.minutes) + rest.seconds;
     const cycleRestTimeInSeconds =
-      template.cycleRest.minutes * 60 + template.cycleRest.seconds;
+      convertMinutesToSeconds(cycleRest.minutes) + cycleRest.seconds;
 
-    const totalCycleTime =
-      (workTimeInSeconds + restTimeInSeconds) * (template.round - 1) +
-      workTimeInSeconds;
+    const oneRoundTime =
+      workTimeInSeconds * round + restTimeInSeconds * removeLastRest(round);
+    const totalTime =
+      oneRoundTime * cycle + cycleRestTimeInSeconds * removeLastRest(cycle);
 
-    const totalCycleRestTime = (template.cycle - 1) * cycleRestTimeInSeconds;
-
-    return getTimeFromSeconds(
-      totalCycleTime * template.cycle + totalCycleRestTime
-    );
+    return getTimeFromSeconds(totalTime);
   }, [template]);
 
   return { ...template, totalWork, totalTime };
+};
+
+export const calcTotalTime = (schedules: Schedule[]) => {
+  const totalSecond = schedules.reduce((totalMinutes, { time }) => {
+    const { minutes, seconds } = time;
+    return totalMinutes + convertMinutesToSeconds(minutes) + seconds;
+  }, 0);
+  return getTimeFromSeconds(totalSecond);
 };
