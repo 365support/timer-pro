@@ -14,7 +14,7 @@ const Header = ({ className, children }: HeaderProps) => {
   );
 };
 
-Header.Left = ({ className, onClick, children }: HeaderProps) => {
+const Left = ({ className, onClick, children }: HeaderProps) => {
   return (
     <div onClick={onClick} className={clsx(style.headerSide, className)}>
       {children}
@@ -22,7 +22,7 @@ Header.Left = ({ className, onClick, children }: HeaderProps) => {
   );
 };
 
-Header.Center = ({ className, onClick, children }: HeaderProps) => {
+const Center = ({ className, onClick, children }: HeaderProps) => {
   return (
     <div onClick={onClick} className={clsx(style.headerCenter, className)}>
       {children}
@@ -30,12 +30,16 @@ Header.Center = ({ className, onClick, children }: HeaderProps) => {
   );
 };
 
-Header.Right = ({ className, onClick, children }: HeaderProps) => {
+const Right = ({ className, onClick, children }: HeaderProps) => {
   return (
     <div onClick={onClick} className={clsx(style.headerSide, className)}>
       {children}
     </div>
   );
 };
+
+Header.Left = Left;
+Header.Center = Center;
+Header.Right = Right;
 
 export default Header;
