@@ -21,7 +21,7 @@ function Text<T extends ElementType = "span">(
   {
     as,
     color = "black",
-    lineHeight = "1.5",
+    lineHeight = "1",
     weight = "normal",
     size = "16px",
     align = "left",
