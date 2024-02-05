@@ -1,18 +1,31 @@
 "use client";
 import { useRouter } from "next/navigation";
+
 import { TabataTemplate, Time } from "@/types/Time";
+import { useScheduleTemplate } from "@/hooks/useScheduleTemplate";
+import { formatToDoubleDigit } from "@/utils/formatToDoubleDigit";
 import { DEFAULT_TEMPLATE } from "@/constants/constants";
-import { parseToInteger } from "@/utils/parseToInteger";
 import useLocalStorage from "@/hooks/useLocalStorage";
+
+import { theme } from "@/styles/theme.css";
+import { Babel, Cycle, Pause, Play, Round, WaterDrop } from "../Icons";
 import * as style from "./Template.css";
+import Card from "../Card/Card";
+import MainHeader from "../Layout/Header/MainHeader";
+import { useIsShown } from "@/hooks/useIsShown";
+import TimerSetting from "../TimerSetting";
+
+const templateType = "tabata";
 
 const TabataTemplateEditor = () => {
   const router = useRouter();
+  const [isShown, onOpen, onClose] = useIsShown();
 
   const [template, setTemplate] = useLocalStorage<TabataTemplate>(
-    "tabata",
+    templateType,
     DEFAULT_TEMPLATE
   );
+  const { totalTime } = useScheduleTemplate(templateType);
 
   const isTimeObject = (value: Time | number): value is Time => {
     return value !== null && typeof value !== "number";
@@ -44,122 +57,98 @@ const TabataTemplateEditor = () => {
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.innerContainer}>
-        <label htmlFor="work-minutes">운동</label>
-        <input
-          type="number"
-          id="work-minutes"
-          onChange={(event) =>
-            handleTemplateUpdate(
-              "work",
-              parseToInteger(event.target.value),
-              "minutes"
-            )
-          }
-          defaultValue={template.work.minutes}
-        />
-        <div> 분</div>
-        <input
-          type="number"
-          id="work-seconds"
-          onChange={(event) =>
-            handleTemplateUpdate(
-              "work",
-              parseToInteger(event.target.value),
-              "seconds"
-            )
-          }
-          defaultValue={template.work.seconds}
-        />
-        <div> 초</div>
-      </div>
+    <div className={style.templateContainer}>
+      <MainHeader />
+      <div className={style.cardContainer}>
+        <Card className={style.totalTimeCard}>
+          <Card.Title
+            as="title"
+            size="xlg"
+            weight="bold"
+            className={style.test}
+            color={theme.color.White100}
+          >
+            {formatToDoubleDigit(totalTime.minutes)} :{" "}
+            {formatToDoubleDigit(totalTime.seconds)}
+          </Card.Title>
+          <div className={style.totalIconShadow} />
+          <Card.Icon onClick={navigateToTimerPage} className={style.totalIcon}>
+            <Play width="20" height="20" color={theme.color.primary10} />
+          </Card.Icon>
+        </Card>
 
-      <div className={style.innerContainer}>
-        <label htmlFor="rest-minutes">휴식</label>
-        <input
-          type="number"
-          id="rest-minutes"
-          onChange={(event) =>
-            handleTemplateUpdate(
-              "rest",
-              parseToInteger(event.target.value),
-              "minutes"
-            )
-          }
-          defaultValue={template.rest.minutes}
-        />
-        <div> 분</div>
+        <div className={style.flexCard}>
+          <Card className={style.workCard} onClick={onOpen}>
+            <div className={style.displayFlex}>
+              <Card.Icon className={style.workIcon}>
+                <Babel width="24" height="24" color={theme.color.White100} />
+              </Card.Icon>
+              <Card.SubTitle>운동</Card.SubTitle>
+            </div>
+            <Card.Title as="title" size="md" color={theme.color.White100}>
+              {formatToDoubleDigit(template.work.minutes)} :
+              {formatToDoubleDigit(template.work.seconds)}
+            </Card.Title>
+          </Card>
 
-        <input
-          type="number"
-          id="rest-seconds"
-          onChange={(event) =>
-            handleTemplateUpdate(
-              "rest",
-              parseToInteger(event.target.value),
-              "seconds"
-            )
-          }
-          defaultValue={template.rest.seconds}
-        />
-        <div> 초</div>
-      </div>
+          <Card className={style.restCard}>
+            <div className={style.displayFlex}>
+              <Card.Icon className={style.restIcon}>
+                <Pause width="16" height="14" color={theme.color.White100} />
+              </Card.Icon>
+              <Card.SubTitle>휴식</Card.SubTitle>
+            </div>
+            <Card.Title as="title" size="md" color={theme.color.White100}>
+              {formatToDoubleDigit(template.rest.minutes)} :
+              {formatToDoubleDigit(template.rest.seconds)}
+            </Card.Title>
+          </Card>
+        </div>
 
-      <div className={style.innerContainer}>
-        <label htmlFor="round-count">라운드</label>
-        <input
-          type="number"
-          id="round-count"
-          onChange={(event) =>
-            handleTemplateUpdate("round", parseToInteger(event.target.value))
-          }
-          defaultValue={template.round}
-        />
-      </div>
-      <div className={style.innerContainer}>
-        <label htmlFor="cycle-count">사이클</label>
-        <input
-          type="number"
-          id="cycle-count"
-          onChange={(event) =>
-            handleTemplateUpdate("cycle", parseToInteger(event.target.value))
-          }
-          defaultValue={template.cycle}
-        />
-      </div>
+        <Card className={style.roundCard}>
+          <div className={style.displayFlex}>
+            <Card.Icon className={style.roundIcon}>
+              <Round width="24" height="24" color={theme.color.White100} />
+            </Card.Icon>
+            <Card.SubTitle>라운드(운동+휴식)</Card.SubTitle>
+          </div>
+          <Card.Title as="title" size="md" color={theme.color.White100}>
+            {template.round}
+          </Card.Title>
+        </Card>
 
-      <div className={style.innerContainer}>
-        <div>사이클 휴식</div>
-        <input
-          type="number"
-          id="cycle-rest-minutes"
-          onChange={(event) =>
-            handleTemplateUpdate(
-              "cycleRest",
-              parseToInteger(event.target.value),
-              "minutes"
-            )
-          }
-          defaultValue={template.cycleRest.minutes}
-        />
-        <label htmlFor="cycle-rest-minutes">분</label>
-        <input
-          type="number"
-          id="cycle-rest-seconds"
-          onChange={(event) =>
-            handleTemplateUpdate(
-              "cycleRest",
-              parseToInteger(event.target.value),
-              "seconds"
-            )
-          }
-          defaultValue={template.cycleRest.seconds}
-        />
-        <label htmlFor="cycle-rest-seconds"> 초</label>
-      </div>
+        <div className={style.flexCard}>
+          <Card className={style.cycleCard}>
+            <div className={style.displayFlex}>
+              <Card.Icon className={style.roundIcon}>
+                <Cycle width="24" height="24" color={theme.color.White100} />
+              </Card.Icon>
+              <Card.SubTitle>사이클</Card.SubTitle>
+            </div>
+            <Card.Title as="title" size="md" color={theme.color.White100}>
+              {template.cycle}
+            </Card.Title>
+          </Card>
 
-      <button onClick={navigateToTimerPage}>시작</button>
+          <Card className={style.cycleRestCard}>
+            <div className={style.displayFlex}>
+              <Card.Icon className={style.cycleRestIcon}>
+                <WaterDrop
+                  width="24"
+                  height="24"
+                  color={theme.color.White100}
+                />
+              </Card.Icon>
+              <Card.SubTitle>사이클 휴식</Card.SubTitle>
+            </div>
+            <Card.Title as="title" size="md" color={theme.color.White100}>
+              {formatToDoubleDigit(template.cycleRest.minutes)} :
+              {formatToDoubleDigit(template.cycleRest.seconds)}
+            </Card.Title>
+          </Card>
+        </div>
+      </div>
+      {isShown && <TimerSetting onClose={onClose} />}
     </div>
   );
 };
