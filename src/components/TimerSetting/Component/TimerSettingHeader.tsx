@@ -1,7 +1,7 @@
-import Text from "@/components/Text/Text";
-import { Close } from "@/components/Icons";
+import Text from "@/components/Common/Text/Text";
+import Header from "@/components/Common/Layout/Header";
+import { Close } from "@/components/Common/Icons";
 import { theme } from "@/styles/theme.css";
-import Header from ".";
 
 type TimerHeaderProps = {
   onClickLeft?: () => void;

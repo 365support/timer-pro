@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../styles/global.css";
 import * as styles from "./layout.css";
-import Navigation from "@/components/Layout/Navigation";
+import Navigation from "@/components/Common/Layout/Navigation";
 
 export const metadata: Metadata = {
   manifest: "/manifest.json",

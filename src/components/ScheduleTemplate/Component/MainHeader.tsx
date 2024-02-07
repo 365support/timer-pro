@@ -1,8 +1,8 @@
 import { useRouter } from "next/navigation";
 import { theme } from "@/styles/theme.css";
 import { Rubik } from "@/styles/font.css";
-import Text from "@/components/Text/Text";
-import Header from ".";
+import Text from "@/components/Common/Text/Text";
+import Header from "@/components/Common/Layout/Header";
 
 const MainHeader = () => {
   const router = useRouter();

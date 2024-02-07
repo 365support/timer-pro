@@ -8,10 +8,10 @@ import { DEFAULT_TEMPLATE } from "@/constants/constants";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
 import { theme } from "@/styles/theme.css";
-import { Babel, Cycle, Pause, Play, Round, WaterDrop } from "../Icons";
+import { Babel, Cycle, Pause, Play, Round, WaterDrop } from "../Common/Icons";
 import * as style from "./Template.css";
-import Card from "../Card/Card";
-import MainHeader from "../Layout/Header/MainHeader";
+import Card from "../Common/Card/Card";
+import MainHeader from "./Component/MainHeader";
 import { useBooleanState } from "@/hooks/useBooleanState";
 import TimerSetting from "../TimerSetting";
 
@@ -65,7 +65,6 @@ const TabataTemplateEditor = () => {
             as="title"
             size="xlg"
             weight="bold"
-            className={style.test}
             color={theme.color.White100}
           >
             {formatToDoubleDigit(totalTime.minutes)} :{" "}

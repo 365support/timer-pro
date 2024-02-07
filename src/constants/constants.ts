@@ -1,4 +1,4 @@
-import { Preset, Round, Setting, StopWatch } from "@/components/Icons";
+import { Preset, Round, Setting, StopWatch } from "@/components/Common/Icons";
 
 export const DEFAULT_TEMPLATE = {
   work: { minutes: 0, seconds: 30 },

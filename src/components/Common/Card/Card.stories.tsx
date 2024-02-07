@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react";
 import Card from "./Card";
 import { Babel, Play } from "../Icons";
-import * as styles from "../../app/page.css";
+import * as styles from "../../../app/page.css";
 import * as cardStyles from "./Card.css";
 
 export default {

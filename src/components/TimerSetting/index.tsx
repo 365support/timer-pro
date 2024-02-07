@@ -1,4 +1,4 @@
-import TimerSettingHeader from "../Layout/Header/TimerSettingHeader";
+import TimerSettingHeader from "./Component/TimerSettingHeader";
 import * as styles from "./index.css";
 
 type TimerSettingProps = {

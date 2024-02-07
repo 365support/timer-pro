@@ -1,4 +1,3 @@
-import { Rubik } from "@/styles/font.css";
 import { theme } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
@@ -19,14 +18,6 @@ export const displayFlex = style({
   alignItems: "center",
 });
 
-export const test = style({
-  display: "flex",
-  justifyContent: "center",
-
-  alignItems: "end",
-  fontFamily: Rubik,
-});
-
 export const templateContainer = style({
   position: "relative",
   width: "100%",
@@ -34,7 +25,7 @@ export const templateContainer = style({
 
 export const cardContainer = style({
   width: "100%",
-  padding: "10% 2% 0 2%",
+  padding: "8% 2% 0 2%",
   display: "flex",
   flexDirection: "column",
   gap: "6px",

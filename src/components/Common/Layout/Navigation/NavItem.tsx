@@ -1,5 +1,5 @@
 import { ElementType } from "react";
-import Text from "@/components/Text/Text";
+import Text from "@/components/Common/Text/Text";
 import { theme } from "@/styles/theme.css";
 import * as style from "./index.css";
 

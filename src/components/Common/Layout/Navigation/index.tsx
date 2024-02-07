@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { Hourglass } from "@/components/Icons";
+import { Hourglass } from "@/components/Common/Icons";
 import {
   NAV_ITEMS_FIRST_GROUP,
   NAV_ITEMS_SECOND_GROUP,
