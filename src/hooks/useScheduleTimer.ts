@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Schedule } from "@/types/Time";
-import { timeIsUp } from "@/utils/timeIsUp";
+import { isTimeUp } from "@/utils/isTimeUp";
 import { selectAppropriateTime } from "@/utils/selectAppropriateTime";
 import { calcTotalTime } from "./useScheduleTemplate";
 import useTimer from "./useTimer";
@@ -46,7 +46,7 @@ const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
   };
 
   const startScheduleTimerForIndex = (index: number) => {
-    const hasPausedTime = !timeIsUp(pausedTime);
+    const hasPausedTime = !isTimeUp(pausedTime);
     const scheduleTime = selectAppropriateTime(
       hasPausedTime,
       pausedTime,
@@ -57,7 +57,7 @@ const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
   };
 
   const startTotalTimerForSchedule = () => {
-    const hasPausedTime = !timeIsUp(totalPausedTime);
+    const hasPausedTime = !isTimeUp(totalPausedTime);
 
     const totalTimerTime = selectAppropriateTime(
       hasPausedTime,
@@ -105,7 +105,7 @@ const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
   };
 
   const displayCurrentTime = () => {
-    const hasPausedTime = !timeIsUp(pausedTime);
+    const hasPausedTime = !isTimeUp(pausedTime);
 
     if (totalTimerIsRunning) {
       return currentTime;
@@ -117,7 +117,7 @@ const useScheduleTimer = ({ schedules, onCancel }: ScheduleTimer) => {
   };
 
   const displayCurrentTotalTime = () => {
-    const hasPausedTime = !timeIsUp(totalPausedTime);
+    const hasPausedTime = !isTimeUp(totalPausedTime);
 
     if (totalTimerIsRunning) {
       return currentTotalTime;

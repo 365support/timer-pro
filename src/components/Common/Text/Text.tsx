@@ -21,7 +21,7 @@ function Text<T extends ElementType = "span">(
   {
     as,
     color = "black",
-    lineHeight = "1.5",
+    lineHeight = "normal",
     weight = "normal",
     size = "16px",
     align = "left",
@@ -44,7 +44,7 @@ function Text<T extends ElementType = "span">(
 
   return (
     <Component
-      className={styles.container}
+      className={styles.containerStyle}
       ref={ref}
       role="text"
       style={dynamicStyles}

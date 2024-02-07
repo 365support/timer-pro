@@ -16,7 +16,7 @@ function CustomText(
     as = "body",
     size = "md",
     color = "black",
-    lineHeight = "1.5",
+    lineHeight = "normal",
     weight = "normal",
     align = "left",
     family = "sans-serif",

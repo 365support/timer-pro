@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../styles/global.css";
-import * as style from "./layout.css";
+import * as styles from "./layout.css";
+import Navigation from "@/components/Common/Layout/Navigation";
 
 export const metadata: Metadata = {
   manifest: "/manifest.json",
@@ -15,7 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={style.body}>{children}</body>
+      <body className={styles.body}>
+        <main className={styles.main}>{children}</main>
+        <footer className={styles.footer}>
+          <Navigation />
+        </footer>
+      </body>
     </html>
   );
 }

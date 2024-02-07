@@ -65,7 +65,7 @@ const SubTitle = ({
 
 const Icon = ({ className, children, ...props }: CardProps) => {
   return (
-    <div className={className} {...props}>
+    <div className={clsx(cardStyles.cardIconStyle, className)} {...props}>
       {children}
     </div>
   );

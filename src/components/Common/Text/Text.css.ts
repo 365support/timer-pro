@@ -7,7 +7,7 @@ export const size = createVar();
 export const align = createVar();
 export const family = createVar();
 
-export const container = style({
+export const containerStyle = style({
   color,
   lineHeight,
   fontWeight: weight,

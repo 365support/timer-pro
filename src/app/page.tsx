@@ -1,9 +1,5 @@
-import Template from "@/components/Template/TabataTemplate";
+import TabataTemplate from "@/components/ScheduleTemplate/TabataTemplate";
 
 export default function Home() {
-  return (
-    <main>
-      <Template />
-    </main>
-  );
+  return <TabataTemplate />;
 }

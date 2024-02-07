@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react";
 import Card from "./Card";
 import { Babel, Play } from "../Icons";
-import * as style from "../../app/page.css";
+import * as styles from "../../../app/page.css";
 import * as cardStyles from "./Card.css";
 
 export default {
@@ -17,7 +17,7 @@ export const Default = DefaultTemplate.bind({});
 Default.args = {
   children: (
     <>
-      <div className={style.displayFlex}>
+      <div className={styles.displayFlex}>
         <Card.Icon>
           <Babel width="24" height="24" color="#999999" />
         </Card.Icon>
@@ -36,7 +36,7 @@ export const Second = SecondTemplate.bind({});
 Second.args = {
   children: (
     <>
-      <div className={style.displayFlex}>
+      <div className={styles.displayFlex}>
         <Card.Icon>
           <Babel width="24" height="24" color="#999999" />
         </Card.Icon>
@@ -59,7 +59,7 @@ Third.args = {
       <Card.Icon>
         <Play width="28" height="28" color="#fff" />
       </Card.Icon>
-      <div className={style.displayFlex}></div>
+      <div className={styles.displayFlex}></div>
     </>
   ),
 };

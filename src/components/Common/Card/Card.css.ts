@@ -36,3 +36,9 @@ export const thirdCardStyle = style({
   width: "343px",
   height: "208px",
 });
+
+export const cardIconStyle = style({
+  display: "flex",
+  alignItems: "center",
+  borderRadius: "50%",
+});
