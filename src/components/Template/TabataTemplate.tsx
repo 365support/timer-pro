@@ -12,14 +12,14 @@ import { Babel, Cycle, Pause, Play, Round, WaterDrop } from "../Icons";
 import * as style from "./Template.css";
 import Card from "../Card/Card";
 import MainHeader from "../Layout/Header/MainHeader";
-import { useIsShown } from "@/hooks/useIsShown";
+import { useBooleanState } from "@/hooks/useBooleanState";
 import TimerSetting from "../TimerSetting";
 
 const templateType = "tabata";
 
 const TabataTemplateEditor = () => {
   const router = useRouter();
-  const [isShown, onOpen, onClose] = useIsShown();
+  const [isShown, onOpen, onClose] = useBooleanState();
 
   const [template, setTemplate] = useLocalStorage<TabataTemplate>(
     templateType,
