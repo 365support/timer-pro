@@ -16,16 +16,16 @@ function useLocalStorage<T>(key: string, defaultValue?: T) {
   });
 
   useEffect(() => {
-    if (!isServer) {
-      try {
-        const item = getLocalStorageItem<T>(key);
-        const value = item ?? defaultValue ?? null;
-        setStoredValue(value);
-        setLocalStorageItem(key, value);
-      } catch (error) {
-        console.error(error);
-        setStoredValue(defaultValue ?? null);
-      }
+    if (isServer === true) return;
+
+    try {
+      const item = getLocalStorageItem<T>(key);
+      const value = item ?? defaultValue ?? null;
+      setStoredValue(value);
+      setLocalStorageItem(key, value);
+    } catch (error) {
+      console.error(error);
+      setStoredValue(defaultValue ?? null);
     }
   }, [key, defaultValue]);
 
