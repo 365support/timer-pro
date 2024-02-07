@@ -1,7 +1,7 @@
 import { theme } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const container = style({
+export const containerStyle = style({
   position: "absolute",
   width: "100%",
   maxWidth: "600px",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/global.css";
-import * as style from "./layout.css";
+import * as styles from "./layout.css";
 import Navigation from "@/components/Layout/Navigation";
 
 export const metadata: Metadata = {
@@ -16,9 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={style.body}>
-        <main className={style.main}>{children}</main>
-        <footer className={style.footer}>
+      <body className={styles.body}>
+        <main className={styles.main}>{children}</main>
+        <footer className={styles.footer}>
           <Navigation />
         </footer>
       </body>

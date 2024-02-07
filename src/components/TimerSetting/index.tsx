@@ -1,5 +1,5 @@
 import TimerSettingHeader from "../Layout/Header/TimerSettingHeader";
-import * as style from "./index.css";
+import * as styles from "./index.css";
 
 type TimerSettingProps = {
   onClose: () => void;
@@ -7,7 +7,7 @@ type TimerSettingProps = {
 
 const TimerSetting = ({ onClose }: TimerSettingProps) => {
   return (
-    <div className={style.container}>
+    <div className={styles.containerStyle}>
       <TimerSettingHeader onClickLeft={onClose} />
     </div>
   );

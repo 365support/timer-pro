@@ -44,7 +44,7 @@ function Text<T extends ElementType = "span">(
 
   return (
     <Component
-      className={styles.container}
+      className={styles.containerStyle}
       ref={ref}
       role="text"
       style={dynamicStyles}

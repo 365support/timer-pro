@@ -1,7 +1,7 @@
 import { HTMLAttributes, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
-import * as style from "./index.css";
+import * as styles from "./index.css";
 
 type NavItemProps = {
   children: ReactNode;
@@ -13,7 +13,7 @@ export default function NavRoute({ children, route, className }: NavItemProps) {
 
   return (
     <button
-      className={clsx(style.navItem, className)}
+      className={clsx(styles.navItem, className)}
       onClick={() => router.push(route)}
     >
       {children}
