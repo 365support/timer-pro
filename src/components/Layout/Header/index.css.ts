@@ -8,20 +8,36 @@ export const headerStyle = style({
   height: "50px",
 });
 
-export const headerUnderLine = style({
-  width: "100%",
-  borderBottom: "1px solid #210F31",
+const baseHeaderItem = style({
+  backgroundColor: "transparent",
+  border: "none",
+  padding: 0,
+  cursor: "pointer",
 });
 
-export const headerSide = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "16px",
-});
+export const headerUnderLine = style([
+  baseHeaderItem,
+  {
+    width: "100%",
+    borderBottom: "1px solid #210F31",
+  },
+]);
 
-export const headerCenter = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  flex: 1,
-});
+export const headerSide = style([
+  baseHeaderItem,
+  {
+    display: "flex",
+    alignItems: "center",
+    gap: "16px",
+  },
+]);
+
+export const headerCenter = style([
+  baseHeaderItem,
+  {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+]);

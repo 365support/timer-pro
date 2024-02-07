@@ -3,7 +3,7 @@ import * as style from "./index.css"; // 스타일 파일 경로는 예시입니
 
 type HeaderProps = {
   children: React.ReactNode;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & React.HTMLAttributes<HTMLButtonElement>;
 
 const Header = ({ className, children }: HeaderProps) => {
   return (
@@ -16,25 +16,25 @@ const Header = ({ className, children }: HeaderProps) => {
 
 const Left = ({ className, onClick, children }: HeaderProps) => {
   return (
-    <div onClick={onClick} className={clsx(style.headerSide, className)}>
+    <button onClick={onClick} className={clsx(style.headerSide, className)}>
       {children}
-    </div>
+    </button>
   );
 };
 
 const Center = ({ className, onClick, children }: HeaderProps) => {
   return (
-    <div onClick={onClick} className={clsx(style.headerCenter, className)}>
+    <button onClick={onClick} className={clsx(style.headerCenter, className)}>
       {children}
-    </div>
+    </button>
   );
 };
 
 const Right = ({ className, onClick, children }: HeaderProps) => {
   return (
-    <div onClick={onClick} className={clsx(style.headerSide, className)}>
+    <button onClick={onClick} className={clsx(style.headerSide, className)}>
       {children}
-    </div>
+    </button>
   );
 };
 
