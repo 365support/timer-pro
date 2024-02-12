@@ -42,3 +42,16 @@ export const cardIconStyle = style({
   alignItems: "center",
   borderRadius: "50%",
 });
+
+export const myStyle = style({
+  display: "flex",
+  gap: "12px",
+  padding: "20px",
+  flexDirection: "column",
+});
+
+export const displayFlex = style({
+  display: "flex",
+  gap: "12px",
+  alignItems: "center",
+});
