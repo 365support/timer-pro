@@ -1,5 +1,8 @@
 import { ReactNode } from "react";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import clsx from "clsx";
 import * as styles from "./index.css";
@@ -13,7 +16,7 @@ type ProgressbarProps = {
 const Progressbar = ({ className, percent, children }: ProgressbarProps) => {
   return (
     <div className={clsx(className, styles.progressContainerStyle)}>
-      <CircularProgressbar
+      <CircularProgressbarWithChildren
         strokeWidth={5}
         value={percent}
         styles={buildStyles({
@@ -21,8 +24,9 @@ const Progressbar = ({ className, percent, children }: ProgressbarProps) => {
           pathColor: "#8778F0",
           pathTransitionDuration: percent === 0 ? 0 : 0.5,
         })}
-      />
-      <div className={styles.innerContentStyle}>{children}</div>
+      >
+        {children}
+      </CircularProgressbarWithChildren>
     </div>
   );
 };
