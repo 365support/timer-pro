@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Schedule, TabataTemplate, Time } from "@/types/Time";
 import useLocalStorage from "./useLocalStorage";
+import { convertMinutesToSeconds } from "@/utils/convertMinutesToSeconds";
 import { DEFAULT_TEMPLATE } from "@/constants/constants";
 import { getTimeFromSeconds } from "./useTimer";
 
@@ -10,8 +11,6 @@ interface ScheduleTemplate extends TabataTemplate {
     totalSeconds: number;
   };
 }
-
-const convertMinutesToSeconds = (minutes: number) => minutes * 60;
 
 const removeLastRest = (restCount: number) => restCount - 1;
 
