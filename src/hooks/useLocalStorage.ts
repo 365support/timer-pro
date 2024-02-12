@@ -31,13 +31,13 @@ function useLocalStorage<T>(key: string, defaultValue?: T) {
 
   const setValue: Dispatch<SetStateAction<T | null>> = (value) => {
     try {
+      if (isServer === true) return;
+
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
 
-      if (!isServer) {
-        setLocalStorageItem(key, valueToStore);
-      }
+      setLocalStorageItem(key, valueToStore);
     } catch (error) {
       console.error(error);
     }
