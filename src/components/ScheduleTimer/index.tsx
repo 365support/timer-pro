@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import useScheduleTimer from "@/hooks/useScheduleTimer";
+import { useScheduleAudio } from "@/hooks/useScheduleAudio";
 import { useScheduleTemplate } from "@/hooks/useScheduleTemplate";
 import { SCHEDULE_NAME } from "@/constants/constants";
 import { Schedule, TemplateType } from "@/types/Time";
@@ -13,6 +14,7 @@ import RestTime from "./Component/RestTime";
 import TimerHeader from "./Component/TimerHeader";
 import Progressbar from "./Component/Progressbar";
 import * as styles from "./index.css";
+import CustomAudioPlayer from "../Common/CustomAudioPlayer";
 
 interface Props {
   schedules: Schedule[];
@@ -42,6 +44,12 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
     schedules,
     onCancel: navigateToMainPage,
   });
+
+  const { audioSource, isPlaying, isLooping, isMuted, toggleMute } =
+    useScheduleAudio({
+      totalTimerIsRunning,
+      currentTime,
+    });
 
   return (
     <div className={styles.mainContainer}>
@@ -82,6 +90,8 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
 
         <ControlPanel
           isRunning={totalTimerIsRunning}
+          isMuted={isMuted}
+          toggleMute={toggleMute}
           onStart={startScheduleTimer}
           onStop={stopScheduleTimer}
           onCancel={cancelScheduleTimer}
@@ -89,6 +99,13 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
           hasNext={!!nextSchedule}
         />
       </div>
+
+      <CustomAudioPlayer
+        src={audioSource}
+        play={isPlaying}
+        loop={isLooping}
+        muted={isMuted}
+      />
     </div>
   );
 };
