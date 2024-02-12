@@ -31,7 +31,7 @@ const useTimer = () => {
 
     timerRef.current = setInterval(() => {
       setTotalSeconds((prevSeconds) => {
-        if (prevSeconds <= 1) {
+        if (prevSeconds <= 0) {
           clearInterval(timerRef.current);
           setIsRunning(false);
           onComplete?.();
