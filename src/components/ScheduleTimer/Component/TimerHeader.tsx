@@ -23,12 +23,7 @@ const TimerHeader = ({
       </Header.Left>
 
       <Header.Center>
-        <Text
-          color={theme.color.White100}
-          size={theme.fontSize.caption.sm}
-          weight="bold"
-          lineHeight="30px"
-        >
+        <Text color={theme.color.White100} size={theme.fontSize.title.sm}>
           {scheduleName}
         </Text>
       </Header.Center>

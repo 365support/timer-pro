@@ -3,11 +3,13 @@ import { Schedule, TabataTemplate } from "@/types/Time";
 const createRoundSchedules = (template: TabataTemplate): Schedule[] => {
   return Array.from({ length: template.round }, (_, index) => {
     const isNotLastRound = index < template.round - 1;
+    const schedules: Schedule[] = [{ name: "work", time: template.work }];
 
-    return [
-      { name: "work", time: template.work },
-      ...(isNotLastRound ? [{ name: "rest", time: template.rest }] : []),
-    ];
+    if (isNotLastRound) {
+      schedules.push({ name: "rest", time: template.rest });
+    }
+
+    return schedules;
   }).flat();
 };
 
@@ -18,9 +20,12 @@ export const createScheduleFromTemplate = (
 
   return Array.from({ length: template.cycle }, (_, cycleIndex) => {
     const isNotLastCycle = cycleIndex < template.cycle - 1;
+    const cycleSchedules = [...roundSchedules];
 
-    return isNotLastCycle
-      ? [...roundSchedules, { name: "cycleRest", time: template.cycleRest }]
-      : [...roundSchedules];
+    if (isNotLastCycle) {
+      cycleSchedules.push({ name: "cycleRest", time: template.cycleRest });
+    }
+
+    return cycleSchedules;
   }).flat();
 };

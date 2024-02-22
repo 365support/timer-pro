@@ -1,19 +1,27 @@
 "use client";
 import { useRouter } from "next/navigation";
 import useScheduleTimer from "@/hooks/useScheduleTimer";
+import { useScheduleAudio } from "@/hooks/useScheduleAudio";
 import { useScheduleTemplate } from "@/hooks/useScheduleTemplate";
+import { SCHEDULE_NAME } from "@/constants/constants";
 import { Schedule, TemplateType } from "@/types/Time";
+import calculateProgressPercent from "@/utils/calculateProgressPercent";
 import CurrentSchedule from "./Component/CurrentSchedule";
 import NextSchedule from "./Component/NextSchedule";
 import ScheduleCounter from "./Component/ScheduleCounter";
 import ControlPanel from "./Component/ControlPanel";
 import RestTime from "./Component/RestTime";
+import TimerHeader from "./Component/TimerHeader";
+import Progressbar from "./Component/Progressbar";
+import * as styles from "./index.css";
+import CustomAudioPlayer from "../Common/CustomAudioPlayer";
 
 interface Props {
   schedules: Schedule[];
   TemplateType: TemplateType;
 }
 
+// TODO: 운동 끝났을 때 모달창 띄우고 메인페이지 이동
 const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
   const { cycle, totalWork } = useScheduleTemplate(TemplateType);
 
@@ -37,25 +45,66 @@ const ScheduleTimer = ({ schedules, TemplateType }: Props) => {
     onCancel: navigateToMainPage,
   });
 
+  const { audioSource, isPlaying, isLooping, isMuted, toggleMute } =
+    useScheduleAudio({
+      totalTimerIsRunning,
+      currentTime,
+    });
+
   return (
-    <div>
-      <ScheduleCounter
-        currentSchedule={currentSchedule}
-        totalWork={totalWork}
-        cycle={cycle}
+    <div className={styles.mainContainer}>
+      <TimerHeader
+        onClickLeft={navigateToMainPage}
+        isLock={false}
+        scheduleName={SCHEDULE_NAME[currentSchedule.name]}
       />
-      {currentSchedule && (
-        <CurrentSchedule name={currentSchedule.name} time={currentTime} />
-      )}
-      <RestTime time={currentTotalTime} />
-      {nextSchedule && <NextSchedule name={nextSchedule.name} />}
-      <ControlPanel
-        isRunning={totalTimerIsRunning}
-        onStart={startScheduleTimer}
-        onStop={stopScheduleTimer}
-        onCancel={cancelScheduleTimer}
-        onNext={nextScheduleTimer}
-        hasNext={!!nextSchedule}
+
+      <div className={styles.innerContainer}>
+        <ScheduleCounter
+          currentSchedule={currentSchedule}
+          totalWork={totalWork}
+          cycle={cycle}
+        />
+
+        <div className={styles.progressStyle}>
+          <Progressbar
+            percent={calculateProgressPercent({
+              totalTime: currentSchedule.time,
+              elapsedTime: currentTime,
+            })}
+          >
+            <div className={styles.displayFlex}>
+              {currentSchedule && (
+                <CurrentSchedule
+                  name={SCHEDULE_NAME[currentSchedule.name]}
+                  time={currentTime}
+                />
+              )}
+              <RestTime time={currentTotalTime} />
+            </div>
+          </Progressbar>
+          {nextSchedule && (
+            <NextSchedule name={SCHEDULE_NAME[nextSchedule.name]} />
+          )}
+        </div>
+
+        <ControlPanel
+          isRunning={totalTimerIsRunning}
+          isMuted={isMuted}
+          toggleMute={toggleMute}
+          onStart={startScheduleTimer}
+          onStop={stopScheduleTimer}
+          onCancel={cancelScheduleTimer}
+          onNext={nextScheduleTimer}
+          hasNext={!!nextSchedule}
+        />
+      </div>
+
+      <CustomAudioPlayer
+        src={audioSource}
+        play={isPlaying}
+        loop={isLooping}
+        muted={isMuted}
       />
     </div>
   );

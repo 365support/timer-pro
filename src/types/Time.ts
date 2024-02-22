@@ -3,7 +3,9 @@ export type Time = {
   seconds: number;
 };
 
-export type Schedule = { name: string; time: Time };
+type templateName = "work" | "rest" | "round" | "cycle" | "cycleRest";
+
+export type Schedule = { name: templateName; time: Time };
 
 type Round = {
   work: Schedule;
