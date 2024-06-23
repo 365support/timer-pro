@@ -12,3 +12,25 @@ yarn install
 ```
 yarn dev
 ```
+
+
+### 1. 시간 설정 
+저장된 템플릿을 볼 수 있어요! (시간 설정은 기능 구현 중이에요 🥲)
+<div style="display: flex; justify-content: center; text-align: center;">
+  <figure style="width: 32%; margin: 0 1%;">
+    <img src="https://github.com/365support/timer-pro/assets/86206374/71ee255e-fd05-425b-8e82-6e45a9f2596e" width="30%" height="10%">
+  </figure>
+</div>
+
+###  2. 타이머 작동
+플레이 버튼을 누르면 설정된 템플릿에 따라 타이머가 작동돼요.</br>
+시작, 중간, 다음 타이머로 이동할 때 소리 알람으로 알려줘요!
+
+<div style="display: flex; justify-content: center; text-align: center;">
+  <figure style="width: 32%; margin: 0 1%;">
+    <img src="https://github.com/365support/timer-pro/assets/86206374/1d6451be-723c-4f73-a0b6-c8a6050af047" width="30%" height="10%">
+  </figure>
+   <figure style="width: 32%; margin: 0 1%;">
+    <img src="https://github.com/365support/timer-pro/assets/86206374/719e93a0-08b4-4b9e-9a25-1f730a2dee71" width="30%" height="10%">
+  </figure>
+</div>
